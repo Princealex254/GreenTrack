@@ -8,103 +8,301 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
         .btn { 
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
             font-weight: 600; 
             padding: 1rem 1.5rem; 
-            border-radius: 0.5rem; 
+            border-radius: 0.75rem; 
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.3);
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            height: 2px;
+            margin: 4rem 0;
+        }
+        
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #10b981;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            z-index: 40;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #374151;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+        
+        .mobile-menu .auth-links-mobile {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .auth-links {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 font-sans text-gray-800 min-h-screen">
 
     <!-- Header and Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
-            <a href="index.html" class="text-2xl font-bold text-emerald-600">GreenTrack</a>
-            <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg">
-                <a href="index.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Home</a>
-                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-colors">About</a>
-                <a href="features.html" class="text-emerald-600 font-bold">Features</a>
-                <a href="portal.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Residents Portal</a>
-                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Dashboard</a>
-                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Admin Preview</a>
-                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Contact</a>
+    <header class="glass-effect sticky top-0 z-50 border-b border-white/20 relative">
+        <nav class="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between">
+            <a href="index.html" class="text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-300">
+                <i class="fas fa-leaf mr-2"></i>GreenTrack
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div id="nav-links" class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg">
+                <a href="index.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Home</a>
+                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">About</a>
+                <a href="features.html" class="text-emerald-600 font-bold bg-emerald-100 px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-200">Features</a>
+                <a href="portal.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Residents Portal</a>
+                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Dashboard</a>
+                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Admin Preview</a>
+                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Contact</a>
+            </div>
+            
+            <!-- Desktop Auth Links -->
+            <div id="auth-links" class="mt-4 md:mt-0 flex space-x-4">
+                <!-- Links will be injected by the script -->
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="features.html" class="text-emerald-600 font-bold bg-emerald-100 mx-4 my-2 rounded-lg">Features</a>
+            <a href="portal.html" id="mobile-portal-link">Residents Portal</a>
+            <a href="dashboard.html" id="mobile-dashboard-link">Dashboard</a>
+            <a href="admin.html">Admin Preview</a>
+            <a href="contact.html">Contact</a>
+            <div id="auth-links-mobile" class="auth-links-mobile">
+                <!-- Mobile auth links will be injected by the script -->
+            </div>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-16">
 
         <!-- Features Page Section -->
         <section id="features" class="page-section">
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-8 text-center border-b-2 border-emerald-300 pb-2">Our Key Features</h2>
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <!-- Feature Card 1 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-cogs text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Management Information System (MIS)</h3>
-                        <p class="text-gray-600">Track and manage waste collection, sorting, and recycling processes with detailed analytics.</p>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-6 fade-in">Our Key Features</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Feature Card 1 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-cogs text-2xl text-white"></i>
                     </div>
-                    <!-- Feature Card 2 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-map-marked-alt text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">GIS Integration</h3>
-                        <p class="text-gray-600">Optimize truck routing for fuel efficiency and faster pickups, visualized on a map.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Management Information System (MIS)</h3>
+                    <p class="text-gray-700 leading-relaxed">Track and manage waste collection, sorting, and recycling processes with detailed analytics.</p>
+                </div>
+                <!-- Feature Card 2 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-map-marked-alt text-2xl text-white"></i>
                     </div>
-                    <!-- Feature Card 3 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-recycle text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Recyclables Tracking Module</h3>
-                        <p class="text-gray-600">Monitor the classification and processing timeframes of all recycled materials.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">GIS Integration</h3>
+                    <p class="text-gray-700 leading-relaxed">Optimize truck routing for fuel efficiency and faster pickups, visualized on a map.</p>
+                </div>
+                <!-- Feature Card 3 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-recycle text-2xl text-white"></i>
                     </div>
-                    <!-- Feature Card 4 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-user-edit text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Resident Reporting System</h3>
-                        <p class="text-gray-600">Empower residents to report issues and schedule pickups with a simple form.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Recyclables Tracking Module</h3>
+                    <p class="text-gray-700 leading-relaxed">Monitor the classification and processing timeframes of all recycled materials.</p>
+                </div>
+                <!-- Feature Card 4 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-edit text-2xl text-white"></i>
                     </div>
-                    <!-- Feature Card 5 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-bell text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Alert System</h3>
-                        <p class="text-gray-600">Receive real-time alerts on scheduled pickups and community recycling drives.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Resident Reporting System</h3>
+                    <p class="text-gray-700 leading-relaxed">Empower residents to report issues and schedule pickups with a simple form.</p>
+                </div>
+                <!-- Feature Card 5 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bell text-2xl text-white"></i>
                     </div>
-                    <!-- Feature Card 6 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-chart-bar text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Data Analytics Dashboard</h3>
-                        <p class="text-gray-600">Visualize key trends and performance indicators for effective decision-making.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Alert System</h3>
+                    <p class="text-gray-700 leading-relaxed">Receive real-time alerts on scheduled pickups and community recycling drives.</p>
+                </div>
+                <!-- Feature Card 6 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-bar text-2xl text-white"></i>
                     </div>
-                    <!-- Placeholder Card 7 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-leaf text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Environmental Impact Tool</h3>
-                        <p class="text-gray-600">Monitor landfill statistics and pollution levels to track our positive impact.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Data Analytics Dashboard</h3>
+                    <p class="text-gray-700 leading-relaxed">Visualize key trends and performance indicators for effective decision-making.</p>
+                </div>
+                <!-- Feature Card 7 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-leaf text-2xl text-white"></i>
                     </div>
-                    <!-- Placeholder Card 8 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-lock text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Information Security</h3>
-                        <p class="text-gray-600">Secure access control and a robust database mockup to protect sensitive data.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Environmental Impact Tool</h3>
+                    <p class="text-gray-700 leading-relaxed">Monitor landfill statistics and pollution levels to track our positive impact.</p>
+                </div>
+                <!-- Feature Card 8 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-lock text-2xl text-white"></i>
                     </div>
-                    <!-- Placeholder Card 9 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-handshake text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Training & Support</h3>
-                        <p class="text-gray-600">A dedicated section for user training videos and comprehensive support.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Information Security</h3>
+                    <p class="text-gray-700 leading-relaxed">Secure access control and a robust database mockup to protect sensitive data.</p>
+                </div>
+                <!-- Feature Card 9 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-handshake text-2xl text-white"></i>
                     </div>
-                    <!-- Placeholder Card 10 -->
-                    <div class="bg-emerald-50 rounded-lg p-6 flex flex-col items-center text-center shadow-md hover:shadow-lg transition-shadow">
-                        <i class="fas fa-coins text-5xl text-emerald-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Financial Sustainability</h3>
-                        <p class="text-gray-600">An analysis of cost-benefit and revenue generation models for sustainable operations.</p>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Training & Support</h3>
+                    <p class="text-gray-700 leading-relaxed">A dedicated section for user training videos and comprehensive support.</p>
+                </div>
+                <!-- Feature Card 10 -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center text-center shadow-xl card-hover border border-emerald-100 group">
+                    <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-coins text-2xl text-white"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4">Financial Sustainability</h3>
+                    <p class="text-gray-700 leading-relaxed">An analysis of cost-benefit and revenue generation models for sustainable operations.</p>
                 </div>
             </div>
         </section>
@@ -112,22 +310,145 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin-in text-2xl"></i></a>
+    <footer class="gradient-bg text-white py-8 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-leaf text-2xl mr-3 text-green-200"></i>
+                    <span class="text-xl font-bold">GreenTrack</span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
-            <p class="text-sm mb-2">&copy; 2025 GreenTrack Waste Management. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 text-sm text-gray-400">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <span>|</span>
-                <a href="#" class="hover:underline">Terms of Service</a>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-white/20 pt-4">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+                    <p class="text-green-100 text-sm">
+                        &copy; 2025 GreenTrack Waste Management. All rights reserved.
+                    </p>
+                    <div class="flex space-x-4 text-sm">
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Privacy Policy</a>
+                        <span class="text-green-200">|</span>
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <p class="text-xs text-green-200">
+                        Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals
+                    </p>
+                    <p class="text-xs text-green-300 mt-1">
+                        Design by <span class="font-semibold">Prince Alex Digital</span>
+                    </p>
+                </div>
             </div>
-            <p class="mt-4 text-xs text-gray-500">Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals.</p>
         </div>
     </footer>
+
+    <script>
+        // Auth functionality and Hamburger Menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const authLinks = document.getElementById('auth-links');
+            const navLinks = document.getElementById('nav-links');
+            const authLinksMobile = document.getElementById('auth-links-mobile');
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobilePortalLink = document.getElementById('mobile-portal-link');
+            const mobileDashboardLink = document.getElementById('mobile-dashboard-link');
+
+            // Hamburger menu functionality
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            function renderNav() {
+                // Desktop auth links
+                authLinks.innerHTML = '';
+                // Mobile auth links
+                authLinksMobile.innerHTML = '';
+                
+                if (loggedInUser) {
+                    // Desktop logout button
+                    const logoutBtn = document.createElement('button');
+                    logoutBtn.textContent = 'Log Out';
+                    logoutBtn.className = 'btn bg-red-500 text-white hover:bg-red-600 text-sm py-2 px-4';
+                    logoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('loggedInUser');
+                        window.location.reload();
+                    });
+                    authLinks.appendChild(logoutBtn);
+
+                    // Mobile logout button
+                    const logoutBtnMobile = document.createElement('button');
+                    logoutBtnMobile.textContent = 'Log Out';
+                    logoutBtnMobile.className = 'btn bg-red-500 text-white hover:bg-red-600 text-sm py-2 px-4 w-full';
+                    logoutBtnMobile.addEventListener('click', () => {
+                        localStorage.removeItem('loggedInUser');
+                        window.location.reload();
+                    });
+                    authLinksMobile.appendChild(logoutBtnMobile);
+
+                    // Show portal and dashboard links
+                    if (mobilePortalLink) mobilePortalLink.style.display = 'block';
+                    if (mobileDashboardLink) mobileDashboardLink.style.display = 'block';
+                } else {
+                    // Desktop login button
+                    const authLink = document.createElement('a');
+                    authLink.href = 'login-signup.html';
+                    authLink.className = 'btn bg-emerald-600 text-white hover:bg-emerald-700 text-sm py-2 px-4';
+                    authLink.textContent = 'Log In / Sign Up';
+                    authLinks.appendChild(authLink);
+
+                    // Mobile login button
+                    const authLinkMobile = document.createElement('a');
+                    authLinkMobile.href = 'login-signup.html';
+                    authLinkMobile.className = 'btn bg-emerald-600 text-white hover:bg-emerald-700 text-sm py-2 px-4 w-full text-center';
+                    authLinkMobile.textContent = 'Log In / Sign Up';
+                    authLinksMobile.appendChild(authLinkMobile);
+
+                    // Hide portal and dashboard links
+                    const portalLink = navLinks.querySelector('a[href="portal.html"]');
+                    const dashboardLink = navLinks.querySelector('a[href="dashboard.html"]');
+                    if (portalLink) portalLink.style.display = 'none';
+                    if (dashboardLink) dashboardLink.style.display = 'none';
+                    if (mobilePortalLink) mobilePortalLink.style.display = 'none';
+                    if (mobileDashboardLink) mobileDashboardLink.style.display = 'none';
+                }
+            }
+
+            renderNav();
+        });
+    </script>
 </body>
 </html>
