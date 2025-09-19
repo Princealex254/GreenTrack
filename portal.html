@@ -8,86 +8,595 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
         .page-section {
             padding: 4rem 0;
         }
+        
         .btn { 
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
             font-weight: 600; 
             padding: 1rem 1.5rem; 
-            border-radius: 0.5rem; 
+            border-radius: 0.75rem; 
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.3);
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            height: 2px;
+            margin: 4rem 0;
+        }
+        
+        /* Modern Enhancements */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+        
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .toast.info {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .form-field {
+            position: relative;
+        }
+        
+        .form-field.error input,
+        .form-field.error select,
+        .form-field.error textarea {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        
+        .form-field.success input,
+        .form-field.success select,
+        .form-field.success textarea {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .field-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .field-success {
+            color: #10b981;
+            font-size: 0.875rem;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .location-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .location-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .location-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .location-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #0369a1;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .image-preview {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .image-preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-preview-item .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dark-mode {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+        }
+        
+        .dark-mode .glass-effect {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .dark-mode-toggle {
+            background: #374151;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: #4b5563;
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+        
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #10b981;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            z-index: 40;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #374151;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+        
+        .mobile-menu .auth-links-mobile {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .auth-links {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 font-sans text-gray-800 min-h-screen">
 
     <!-- Header and Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
-            <a href="index.html" class="text-2xl font-bold text-emerald-600">GreenTrack</a>
+    <header class="glass-effect sticky top-0 z-50 border-b border-white/20 relative">
+        <nav class="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between">
+            <a href="index.html" class="text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-300">
+                <i class="fas fa-leaf mr-2"></i>GreenTrack
+            </a>
+            
+            <!-- Desktop Navigation -->
             <div id="nav-links" class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg">
-                <a href="index.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Home</a>
-                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-colors">About</a>
-                <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Features</a>
-                <a href="portal.html" class="text-emerald-600 font-bold">Residents Portal</a>
-                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Dashboard</a>
-                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Admin Preview</a>
-                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Contact</a>
+                <a href="index.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Home</a>
+                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">About</a>
+                <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Features</a>
+                <a href="portal.html" class="text-emerald-600 font-bold bg-emerald-100 px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-200">Residents Portal</a>
+                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Dashboard</a>
+                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Admin Preview</a>
+                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Contact</a>
             </div>
-            <div id="auth-links" class="mt-4 md:mt-0 flex space-x-4">
-                <!-- Links will be injected by the script -->
+            
+            <!-- Desktop Controls -->
+            <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- Desktop Auth Links -->
+                <div id="auth-links" class="flex space-x-4">
+                    <!-- Links will be injected by the script -->
+                </div>
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="features.html">Features</a>
+            <a href="portal.html" class="text-emerald-600 font-bold bg-emerald-100 mx-4 my-2 rounded-lg">Residents Portal</a>
+            <a href="dashboard.html" id="mobile-dashboard-link">Dashboard</a>
+            <a href="admin.html">Admin Preview</a>
+            <a href="contact.html">Contact</a>
+            <div class="px-4 py-2 border-t border-emerald-200">
+                <button id="mobileDarkModeToggle" class="dark-mode-toggle w-full">
+                    <i class="fas fa-moon mr-2"></i>Toggle Dark Mode
+                </button>
+            </div>
+            <div id="auth-links-mobile" class="auth-links-mobile">
+                <!-- Mobile auth links will be injected by the script -->
+            </div>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-16">
 
         <section id="portal" class="page-section">
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-8 text-center border-b-2 border-emerald-300 pb-2">Residents Portal</h2>
-                
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-6 fade-in">Residents Portal</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 card-hover border border-emerald-100">
                 <div id="portalContent">
-                    <p class="text-xl text-gray-600 mb-6">Welcome to your portal! Here you can report issues and schedule services.</p>
+                    <p class="text-xl text-gray-700 mb-8 text-center leading-relaxed">Welcome to your portal! Here you can report issues and schedule services.</p>
                 
                     <div class="grid lg:grid-cols-2 gap-8">
-                        <div class="p-6 bg-emerald-50 rounded-lg shadow-md flex flex-col">
-                            <h3 class="text-2xl font-bold text-emerald-600 mb-4">Report an Issue</h3>
+                        <div class="p-8 bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl shadow-xl flex flex-col card-hover border border-emerald-200">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-flag text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-emerald-700">Report an Issue</h3>
+                            </div>
+                            
+                            <!-- Progress Bar -->
+                            <div class="progress-bar">
+                                <div id="reportProgress" class="progress-fill"></div>
+                            </div>
+                            
                             <form id="reportForm" class="space-y-4">
-                                <div>
-                                    <label for="report-issue" class="block text-sm font-medium text-gray-700">Type of Issue</label>
-                                    <select id="report-issue" name="issue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required>
+                                <div class="form-field" id="issueField">
+                                    <label for="report-issue" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Type of Issue <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="report-issue" name="issue" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300" required>
                                         <option value="">Select an issue...</option>
                                         <option value="missed_collection">Missed Collection</option>
                                         <option value="illegal_dumping">Illegal Dumping</option>
                                         <option value="damaged_bin">Damaged Bin/Container</option>
+                                        <option value="overflow">Overflowing Bins</option>
+                                        <option value="missing_bin">Missing Bin</option>
+                                        <option value="hazardous_waste">Hazardous Waste Disposal</option>
+                                        <option value="noise_complaint">Noise Complaint</option>
                                         <option value="other">Other</option>
                                     </select>
+                                    <div id="issueError" class="field-error hidden">
+                                        <i class="fas fa-exclamation-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
+                                    <div id="issueSuccess" class="field-success hidden">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="report-location" class="block text-sm font-medium text-gray-700">Location (e.g., Street Name, Landmark)</label>
-                                    <input type="text" id="report-location" name="location" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required>
+                                
+                                <div class="form-field" id="locationField">
+                                    <label for="report-location" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Location <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="report-location" name="location" placeholder="Enter street name, landmark, or building..." class="flex-1 mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300 hover:shadow-md" required>
+                                        <button type="button" id="getLocationBtn" class="location-button mt-1">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span class="hidden md:inline">Get Location</span>
+                                        </button>
+                                    </div>
+                                    <div id="locationInfo" class="location-info hidden">
+                                        <i class="fas fa-info-circle mr-2"></i>
+                                        <span id="locationDetails"></span>
+                                    </div>
+                                    <div id="locationError" class="field-error hidden">
+                                        <i class="fas fa-exclamation-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
+                                    <div id="locationSuccess" class="field-success hidden">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="report-description" class="block text-sm font-medium text-gray-700">Description</label>
-                                    <textarea id="report-description" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required></textarea>
+                                
+                                <div class="form-field" id="descriptionField">
+                                    <label for="report-description" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Description <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea id="report-description" name="description" rows="3" placeholder="Please provide detailed information about the issue..." class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300 hover:shadow-md" required></textarea>
+                                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                        <span>Minimum 10 characters</span>
+                                        <span id="descriptionCount">0 characters</span>
+                                    </div>
+                                    <div id="descriptionError" class="field-error hidden">
+                                        <i class="fas fa-exclamation-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
+                                    <div id="descriptionSuccess" class="field-success hidden">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
                                 </div>
+                                
+                                <div class="form-field" id="imagesField">
+                                    <label for="report-images" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Upload Photos (Optional)
+                                    </label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-emerald-400 transition-colors duration-300">
+                                        <input type="file" id="report-images" name="images" multiple accept="image/*" class="hidden">
+                                        <label for="report-images" class="cursor-pointer">
+                                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                            <p class="text-gray-600">Click to upload photos or drag and drop</p>
+                                            <p class="text-sm text-gray-500 mt-1">PNG, JPG, GIF up to 5MB each (max 5 photos)</p>
+                                        </label>
+                                    </div>
+                                    <div id="imagePreview" class="image-preview hidden"></div>
+                                    <div id="imagesError" class="field-error hidden">
+                                        <i class="fas fa-exclamation-circle mr-1"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-field" id="priorityField">
+                                    <label for="report-priority" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Priority Level
+                                    </label>
+                                    <select id="report-priority" name="priority" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300">
+                                        <option value="medium">Medium - Normal Response Time</option>
+                                        <option value="high">High - Urgent Response Needed</option>
+                                        <option value="low">Low - Can Wait</option>
+                                    </select>
+                                </div>
+                                
                                 <div>
-                                    <button type="submit" class="w-full btn bg-emerald-600 text-white hover:bg-emerald-700">Submit Report</button>
+                                    <button type="submit" id="submitReportBtn" class="w-full btn bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700 transition-all duration-300 py-4 text-lg">
+                                        <span id="submitText">
+                                            <i class="fas fa-paper-plane mr-2"></i>Submit Report
+                                        </span>
+                                        <span id="submitLoading" class="hidden">
+                                            <div class="loading-spinner mr-2"></div>
+                                            Submitting...
+                                        </span>
+                                    </button>
                                 </div>
                             </form>
-                            <div id="reportMessage" class="mt-4 text-center text-lg font-semibold text-green-500 hidden"></div>
+                            <div id="reportMessage" class="mt-4 text-center text-lg font-semibold hidden"></div>
                         </div>
                         
-                        <div class="p-6 bg-emerald-50 rounded-lg shadow-md flex flex-col">
-                            <h3 class="text-2xl font-bold text-emerald-600 mb-4">Schedule a Service</h3>
+                        <div class="p-8 bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl shadow-xl flex flex-col card-hover border border-emerald-200">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-calendar-alt text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-emerald-700">Schedule a Service</h3>
+                            </div>
                             <form id="scheduleForm" class="space-y-4">
                                 <div>
-                                    <label for="schedule-service" class="block text-sm font-medium text-gray-700">Service Type</label>
-                                    <select id="schedule-service" name="serviceType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required>
+                                    <label for="schedule-service" class="block text-sm font-medium text-gray-700 mb-2">Service Type</label>
+                                    <select id="schedule-service" name="serviceType" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300" required>
                                         <option value="">Select a service...</option>
                                         <option value="bulky_waste_pickup">Bulky Waste Pickup</option>
                                         <option value="e_waste_collection">E-Waste Collection</option>
@@ -95,15 +604,17 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="schedule-date" class="block text-sm font-medium text-gray-700">Preferred Date</label>
-                                    <input type="date" id="schedule-date" name="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required>
+                                    <label for="schedule-date" class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                                    <input type="date" id="schedule-date" name="date" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300 hover:shadow-md" required>
                                 </div>
                                 <div>
-                                    <label for="schedule-notes" class="block text-sm font-medium text-gray-700">Additional Notes</label>
-                                    <textarea id="schedule-notes" name="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"></textarea>
+                                    <label for="schedule-notes" class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+                                    <textarea id="schedule-notes" name="notes" rows="3" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm p-3 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300 hover:shadow-md"></textarea>
                                 </div>
                                 <div>
-                                    <button type="submit" class="w-full btn bg-emerald-600 text-white hover:bg-emerald-700">Submit Request</button>
+                                    <button type="submit" class="w-full btn bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700 transition-all duration-300 py-4 text-lg">
+                                        <i class="fas fa-calendar-check mr-2"></i>Submit Request
+                                    </button>
                                 </div>
                             </form>
                             <div id="scheduleMessage" class="mt-4 text-center text-lg font-semibold text-green-500 hidden"></div>
@@ -116,21 +627,51 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin-in text-2xl"></i></a>
+    <footer class="gradient-bg text-white py-8 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-leaf text-2xl mr-3 text-green-200"></i>
+                    <span class="text-xl font-bold">GreenTrack</span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
-            <p class="text-sm mb-2">&copy; 2025 GreenTrack Waste Management. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 text-sm text-gray-400">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <span>|</span>
-                <a href="#" class="hover:underline">Terms of Service</a>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-white/20 pt-4">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+                    <p class="text-green-100 text-sm">
+                        &copy; 2025 GreenTrack Waste Management. All rights reserved.
+                    </p>
+                    <div class="flex space-x-4 text-sm">
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Privacy Policy</a>
+                        <span class="text-green-200">|</span>
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <p class="text-xs text-green-200">
+                        Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals
+                    </p>
+                    <p class="text-xs text-green-300 mt-1">
+                        Design by <span class="font-semibold">Prince Alex Digital</span>
+                    </p>
+                </div>
             </div>
-            <p class="mt-4 text-xs text-gray-500">Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals.</p>
         </div>
     </footer>
 
@@ -256,6 +797,343 @@
                 renderNav();
             } catch (error) {
                 console.error('An error occurred during script execution:', error);
+            }
+
+            // Enhanced Location Functionality
+            const getLocationBtn = document.getElementById('getLocationBtn');
+            const locationInput = document.getElementById('report-location');
+            const locationInfo = document.getElementById('locationInfo');
+            const locationDetails = document.getElementById('locationDetails');
+
+            if (getLocationBtn) {
+                getLocationBtn.addEventListener('click', async () => {
+                    if (!navigator.geolocation) {
+                        showMessage('Geolocation is not supported by this browser.', 'error');
+                        return;
+                    }
+
+                    // Show loading state
+                    getLocationBtn.disabled = true;
+                    getLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Getting Location...';
+
+                    try {
+                        const position = await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                                enableHighAccuracy: true,
+                                timeout: 10000,
+                                maximumAge: 60000
+                            });
+                        });
+
+                        const { latitude, longitude } = position.coords;
+                        
+                        // Create a readable address (simplified - in production, use Google Maps API)
+                        const address = `Lat: ${latitude.toFixed(6)}, Lng: ${longitude.toFixed(6)}`;
+                        
+                        // Fill the location input
+                        locationInput.value = address;
+                        
+                        // Show location info
+                        locationDetails.textContent = `📍 GPS Location captured: ${address}`;
+                        locationInfo.classList.remove('hidden');
+                        
+                        // Show success message
+                        showMessage('Location captured successfully!', 'success');
+                        
+                        // Validate the field
+                        validateLocationField();
+
+                    } catch (error) {
+                        console.error('Geolocation error:', error);
+                        let errorMessage = 'Unable to get location. ';
+                        
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage += 'Location access denied. Please enable location permissions.';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage += 'Location information unavailable.';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage += 'Location request timed out.';
+                                break;
+                            default:
+                                errorMessage += 'Please enter location manually.';
+                                break;
+                        }
+                        
+                        showMessage(errorMessage, 'error');
+                    } finally {
+                        // Reset button state
+                        getLocationBtn.disabled = false;
+                        getLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i><span class="hidden md:inline">Get Location</span>';
+                    }
+                });
+            }
+
+            // Enhanced Form Validation
+            function validateLocationField() {
+                const locationInput = document.getElementById('report-location');
+                const locationField = document.getElementById('locationField');
+                const locationError = document.getElementById('locationError');
+                const locationSuccess = document.getElementById('locationSuccess');
+                
+                if (locationInput && locationField) {
+                    const value = locationInput.value.trim();
+                    const isValid = value.length >= 3;
+                    
+                    // Clear previous states
+                    locationField.classList.remove('error', 'success');
+                    locationError?.classList.add('hidden');
+                    locationSuccess?.classList.add('hidden');
+                    
+                    if (isValid) {
+                        locationField.classList.add('success');
+                        locationSuccess?.classList.remove('hidden');
+                        locationSuccess.querySelector('span').textContent = 'Location looks good';
+                    } else {
+                        locationField.classList.add('error');
+                        locationError?.classList.remove('hidden');
+                        locationError.querySelector('span').textContent = 'Please enter a valid location (min 3 characters)';
+                    }
+                    
+                    updateFormProgress();
+                }
+            }
+
+            // Real-time validation for location input
+            if (locationInput) {
+                locationInput.addEventListener('input', validateLocationField);
+                locationInput.addEventListener('blur', validateLocationField);
+            }
+
+            // Enhanced form progress tracking
+            function updateFormProgress() {
+                const form = document.getElementById('reportForm');
+                const progressBar = document.getElementById('reportProgress');
+                
+                if (form && progressBar) {
+                    const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+                    const filledFields = Array.from(requiredFields).filter(field => {
+                        if (field.type === 'file') return true; // File fields are optional
+                        return field.value.trim() !== '';
+                    });
+                    
+                    const progress = (filledFields.length / requiredFields.length) * 100;
+                    progressBar.style.width = `${progress}%`;
+                }
+            }
+
+            // Character counter for description
+            const descriptionField = document.getElementById('report-description');
+            const descriptionCount = document.getElementById('descriptionCount');
+            
+            if (descriptionField && descriptionCount) {
+                descriptionField.addEventListener('input', () => {
+                    const length = descriptionField.value.length;
+                    descriptionCount.textContent = `${length} characters`;
+                    
+                    // Validate description
+                    const descriptionFieldContainer = document.getElementById('descriptionField');
+                    const descriptionError = document.getElementById('descriptionError');
+                    const descriptionSuccess = document.getElementById('descriptionSuccess');
+                    
+                    if (descriptionFieldContainer) {
+                        const isValid = length >= 10;
+                        
+                        // Clear previous states
+                        descriptionFieldContainer.classList.remove('error', 'success');
+                        descriptionError?.classList.add('hidden');
+                        descriptionSuccess?.classList.add('hidden');
+                        
+                        if (isValid) {
+                            descriptionFieldContainer.classList.add('success');
+                            descriptionSuccess?.classList.remove('hidden');
+                            descriptionSuccess.querySelector('span').textContent = 'Description is detailed enough';
+                        } else {
+                            descriptionFieldContainer.classList.add('error');
+                            descriptionError?.classList.remove('hidden');
+                            descriptionError.querySelector('span').textContent = 'Please provide more details (min 10 characters)';
+                        }
+                        
+                        updateFormProgress();
+                    }
+                });
+            }
+
+            // Issue type validation
+            const issueSelect = document.getElementById('report-issue');
+            if (issueSelect) {
+                issueSelect.addEventListener('change', () => {
+                    const issueField = document.getElementById('issueField');
+                    const issueError = document.getElementById('issueError');
+                    const issueSuccess = document.getElementById('issueSuccess');
+                    
+                    if (issueField) {
+                        const isValid = issueSelect.value !== '';
+                        
+                        // Clear previous states
+                        issueField.classList.remove('error', 'success');
+                        issueError?.classList.add('hidden');
+                        issueSuccess?.classList.add('hidden');
+                        
+                        if (isValid) {
+                            issueField.classList.add('success');
+                            issueSuccess?.classList.remove('hidden');
+                            issueSuccess.querySelector('span').textContent = 'Issue type selected';
+                        } else {
+                            issueField.classList.add('error');
+                            issueError?.classList.remove('hidden');
+                            issueError.querySelector('span').textContent = 'Please select an issue type';
+                        }
+                        
+                        updateFormProgress();
+                    }
+                });
+            }
+
+            // Toast notification system
+            function showMessage(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                const icon = {
+                    success: 'fas fa-check-circle',
+                    error: 'fas fa-exclamation-circle',
+                    info: 'fas fa-info-circle'
+                }[type];
+                
+                toast.innerHTML = `
+                    <i class="${icon} mr-3 text-lg"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => toast.classList.add('show'), 100);
+                
+                // Hide toast
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (document.body.contains(toast)) {
+                            document.body.removeChild(toast);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+
+            // Dark mode functionality
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
+            
+            function toggleDarkMode() {
+                const body = document.body;
+                const isDark = body.classList.contains('dark-mode');
+                
+                body.classList.toggle('dark-mode', !isDark);
+                localStorage.setItem('darkMode', (!isDark).toString());
+                
+                const icon = document.querySelector('#darkModeToggle i, #mobileDarkModeToggle i');
+                if (icon) {
+                    icon.className = !isDark ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', toggleDarkMode);
+            }
+            
+            if (mobileDarkModeToggle) {
+                mobileDarkModeToggle.addEventListener('click', toggleDarkMode);
+            }
+            
+            // Initialize dark mode from localStorage
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (savedDarkMode) {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#darkModeToggle i, #mobileDarkModeToggle i');
+                if (icon) {
+                    icon.className = 'fas fa-sun';
+                }
+            }
+
+            // Hamburger menu functionality
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (hamburger && mobileMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+                
+                // Close mobile menu when clicking on a link
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') {
+                        hamburger.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        hamburger.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            // Enhanced form submission with loading states
+            const submitReportBtn = document.getElementById('submitReportBtn');
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
+            
+            if (submitReportBtn) {
+                reportForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Show loading state
+                    submitText.classList.add('hidden');
+                    submitLoading.classList.remove('hidden');
+                    submitReportBtn.disabled = true;
+                    
+                    try {
+                        // Simulate API call
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        
+                        // Get form data
+                        const formData = new FormData(reportForm);
+                        const reportData = {
+                            issue: formData.get('issue'),
+                            location: formData.get('location'),
+                            description: formData.get('description'),
+                            priority: formData.get('priority'),
+                            timestamp: new Date().toISOString(),
+                            status: 'pending',
+                            id: Date.now()
+                        };
+                        
+                        // Save to localStorage
+                        const reports = JSON.parse(localStorage.getItem('reports')) || [];
+                        reports.push(reportData);
+                        localStorage.setItem('reports', JSON.stringify(reports));
+                        
+                        showMessage('Report submitted successfully! 🎉', 'success');
+                        reportForm.reset();
+                        document.getElementById('locationInfo').classList.add('hidden');
+                        updateFormProgress();
+                        
+                    } catch (error) {
+                        showMessage('Failed to submit report', 'error');
+                    } finally {
+                        submitText.classList.remove('hidden');
+                        submitLoading.classList.add('hidden');
+                        submitReportBtn.disabled = false;
+                    }
+                });
             }
         });
     </script>
