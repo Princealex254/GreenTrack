@@ -8,80 +8,288 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
         .btn { 
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
             font-weight: 600; 
             padding: 1rem 1.5rem; 
-            border-radius: 0.5rem; 
+            border-radius: 0.75rem; 
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
+            transition: all 0.3s ease;
         }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.3);
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            height: 2px;
+            margin: 4rem 0;
+        }
+        
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #10b981;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            z-index: 40;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #374151;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+        
+        .mobile-menu .auth-links-mobile {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .auth-links {
+                display: none;
+            }
+        }
+        
         /* Custom CSS for the smooth background transition */
         .hero-background {
             transition: background-image 1s ease-in-out;
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 font-sans text-gray-800 min-h-screen">
 
     <!-- Header and Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
-            <a href="index.html" class="text-2xl font-bold text-emerald-600">GreenTrack</a>
-            <div class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg">
-                <a href="index.html" class="text-emerald-600 font-bold">Home</a>
-                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-colors">About</a>
-                <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Features</a>
-                <a href="portal.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Residents Portal</a>
-                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Dashboard</a>
-                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Admin Preview</a>
-                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-colors">Contact</a>
+    <header class="glass-effect sticky top-0 z-50 border-b border-white/20 relative">
+        <nav class="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between">
+            <a href="index.html" class="text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-300">
+                <i class="fas fa-leaf mr-2"></i>GreenTrack
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div id="nav-links" class="mt-4 md:mt-0 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 text-lg">
+                <a href="index.html" class="text-emerald-600 font-bold bg-emerald-100 px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-200">Home</a>
+                <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">About</a>
+                <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Features</a>
+                <a href="portal.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Residents Portal</a>
+                <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Dashboard</a>
+                <a href="admin.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Admin Preview</a>
+                <a href="contact.html" class="text-gray-700 hover:text-emerald-600 transition-all duration-300 hover:scale-105 font-medium">Contact</a>
+            </div>
+            
+            <!-- Desktop Auth Links -->
+            <div id="auth-links" class="mt-4 md:mt-0 flex space-x-4">
+                <!-- Links will be injected by the script -->
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html" class="text-emerald-600 font-bold bg-emerald-100 mx-4 my-2 rounded-lg">Home</a>
+            <a href="about.html">About</a>
+            <a href="features.html">Features</a>
+            <a href="portal.html" id="mobile-portal-link">Residents Portal</a>
+            <a href="dashboard.html" id="mobile-dashboard-link">Dashboard</a>
+            <a href="admin.html">Admin Preview</a>
+            <a href="contact.html">Contact</a>
+            <div id="auth-links-mobile" class="auth-links-mobile">
+                <!-- Mobile auth links will be injected by the script -->
+            </div>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-16">
 
         <!-- Home Page Hero Section with Background Slider -->
-        <section id="home" class="page-section">
-            <div id="hero-slider" class="relative bg-cover bg-center h-[70vh] rounded-lg shadow-xl flex items-center justify-center p-8 hero-background">
-                <div class="absolute inset-0 bg-emerald-800 opacity-60 rounded-lg"></div>
-                <div class="relative text-center text-white">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4">GreenTrack Waste Management</h1>
-                    <p class="text-xl md:text-2xl font-light italic mb-6">"Waste Not, Want Not – Go Green with GreenTrack!"</p>
-                    <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">
-                        Join the Movement for a Cleaner Kenya. We provide efficient garbage collection, increased recycling, and reduced pollution through technology.
-                    </p>
-                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                        <a href="portal.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-flag mr-2"></i>Report Waste
-                        </a>
-                        <a href="portal.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-calendar-alt mr-2"></i>Schedule Pickup
-                        </a>
-                        <a href="dashboard.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-chart-line mr-2"></i>See Dashboard
-                        </a>
+        <section id="home" class="page-section mb-20">
+            <div id="hero-slider" class="relative bg-cover bg-center h-[70vh] rounded-2xl shadow-2xl flex items-center justify-center p-8 hero-background overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-800/80 to-green-900/80 rounded-2xl"></div>
+                <div class="relative text-center text-white z-10">
+                    <div class="fade-in">
+                        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                            GreenTrack <span class="text-green-200">Waste Management</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl font-light italic mb-6 text-green-100">
+                            "Waste Not, Want Not – Go Green with GreenTrack!"
+                        </p>
+                        <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-green-100 leading-relaxed">
+                            Join the Movement for a Cleaner Kenya. We provide efficient garbage collection, increased recycling, and reduced pollution through technology.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                            <a href="portal.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-flag mr-2"></i>Report Waste
+                            </a>
+                            <a href="portal.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-calendar-alt mr-2"></i>Schedule Pickup
+                            </a>
+                            <a href="dashboard.html" class="btn bg-white text-emerald-600 hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-chart-line mr-2"></i>See Dashboard
+                            </a>
+                        </div>
                     </div>
+                </div>
+                <!-- Floating Icons -->
+                <div class="absolute top-10 left-10 floating">
+                    <i class="fas fa-recycle text-4xl text-green-200/30"></i>
+                </div>
+                <div class="absolute top-20 right-20 floating" style="animation-delay: 1s;">
+                    <i class="fas fa-leaf text-4xl text-green-200/30"></i>
+                </div>
+                <div class="absolute bottom-20 left-20 floating" style="animation-delay: 2s;">
+                    <i class="fas fa-globe-africa text-4xl text-green-200/30"></i>
                 </div>
             </div>
         </section>
 
-        <!-- New Section for Garbage Images -->
-        <section id="garbage-images" class="page-section mt-12">
-            <div class="bg-white rounded-lg shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-8 text-center border-b-2 border-emerald-300 pb-2">A Glimpse of the Challenge</h2>
-                <p class="text-center text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+        <!-- Garbage Images Section -->
+        <section id="garbage-images" class="page-section mb-20">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-6 fade-in">A Glimpse of the Challenge</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 card-hover border border-emerald-100">
+                <p class="text-center text-lg text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed">
                     These images represent the different types of waste we encounter daily and the importance of proper waste management.
                 </p>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <img src="image1.jpg" alt="Plastic bottles and bags" class="rounded-lg shadow-md w-full h-auto object-cover">
-                    <img src="image2.jpg" alt="Electronic waste" class="rounded-lg shadow-md w-full h-auto object-cover">
-                    <img src="image3.avif" alt="Food scraps and organic waste" class="rounded-lg shadow-md w-full h-auto object-cover">
-                    <img src="image4.jpeg" alt="A stack of discarded old tyres" class="rounded-lg shadow-md w-full h-auto object-cover">
-                    <img src="image5.jpg" alt="A pile of unsorted mixed garbage" class="rounded-lg shadow-md w-full h-auto object-cover">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="group">
+                        <img src="image1.jpg" alt="Plastic bottles and bags" class="rounded-xl shadow-lg w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <img src="image2.jpg" alt="Electronic waste" class="rounded-xl shadow-lg w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <img src="image3.avif" alt="Food scraps and organic waste" class="rounded-xl shadow-lg w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <img src="image4.jpeg" alt="A stack of discarded old tyres" class="rounded-xl shadow-lg w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="group md:col-start-2">
+                        <img src="image5.jpg" alt="A pile of unsorted mixed garbage" class="rounded-xl shadow-lg w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
                 </div>
             </div>
         </section>
@@ -89,21 +297,51 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin-in text-2xl"></i></a>
+    <footer class="gradient-bg text-white py-8 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-leaf text-2xl mr-3 text-green-200"></i>
+                    <span class="text-xl font-bold">GreenTrack</span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
-            <p class="text-sm mb-2">&copy; 2025 GreenTrack Waste Management. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 text-sm text-gray-400">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <span>|</span>
-                <a href="#" class="hover:underline">Terms of Service</a>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-white/20 pt-4">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+                    <p class="text-green-100 text-sm">
+                        &copy; 2025 GreenTrack Waste Management. All rights reserved.
+                    </p>
+                    <div class="flex space-x-4 text-sm">
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Privacy Policy</a>
+                        <span class="text-green-200">|</span>
+                        <a href="#" class="text-green-100 hover:text-white transition-colors duration-300">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="mt-2 text-center">
+                    <p class="text-xs text-green-200">
+                        Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals
+                    </p>
+                    <p class="text-xs text-green-300 mt-1">
+                        Design by <span class="font-semibold">Prince Alex Digital</span>
+                    </p>
+                </div>
             </div>
-            <p class="mt-4 text-xs text-gray-500">Proudly supporting Kenya Vision 2030 and UN Sustainable Development Goals.</p>
         </div>
     </footer>
 
@@ -131,6 +369,97 @@
 
             // Change the background every 15 seconds
             setInterval(changeBackground, 15000);
+        });
+
+        // Auth functionality and Hamburger Menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const authLinks = document.getElementById('auth-links');
+            const navLinks = document.getElementById('nav-links');
+            const authLinksMobile = document.getElementById('auth-links-mobile');
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobilePortalLink = document.getElementById('mobile-portal-link');
+            const mobileDashboardLink = document.getElementById('mobile-dashboard-link');
+
+            // Hamburger menu functionality
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            function renderNav() {
+                // Desktop auth links
+                authLinks.innerHTML = '';
+                // Mobile auth links
+                authLinksMobile.innerHTML = '';
+                
+                if (loggedInUser) {
+                    // Desktop logout button
+                    const logoutBtn = document.createElement('button');
+                    logoutBtn.textContent = 'Log Out';
+                    logoutBtn.className = 'btn bg-red-500 text-white hover:bg-red-600 text-sm py-2 px-4';
+                    logoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('loggedInUser');
+                        window.location.reload();
+                    });
+                    authLinks.appendChild(logoutBtn);
+
+                    // Mobile logout button
+                    const logoutBtnMobile = document.createElement('button');
+                    logoutBtnMobile.textContent = 'Log Out';
+                    logoutBtnMobile.className = 'btn bg-red-500 text-white hover:bg-red-600 text-sm py-2 px-4 w-full';
+                    logoutBtnMobile.addEventListener('click', () => {
+                        localStorage.removeItem('loggedInUser');
+                        window.location.reload();
+                    });
+                    authLinksMobile.appendChild(logoutBtnMobile);
+
+                    // Show portal and dashboard links
+                    if (mobilePortalLink) mobilePortalLink.style.display = 'block';
+                    if (mobileDashboardLink) mobileDashboardLink.style.display = 'block';
+                } else {
+                    // Desktop login button
+                    const authLink = document.createElement('a');
+                    authLink.href = 'login-signup.html';
+                    authLink.className = 'btn bg-emerald-600 text-white hover:bg-emerald-700 text-sm py-2 px-4';
+                    authLink.textContent = 'Log In / Sign Up';
+                    authLinks.appendChild(authLink);
+
+                    // Mobile login button
+                    const authLinkMobile = document.createElement('a');
+                    authLinkMobile.href = 'login-signup.html';
+                    authLinkMobile.className = 'btn bg-emerald-600 text-white hover:bg-emerald-700 text-sm py-2 px-4 w-full text-center';
+                    authLinkMobile.textContent = 'Log In / Sign Up';
+                    authLinksMobile.appendChild(authLinkMobile);
+
+                    // Hide portal and dashboard links
+                    const portalLink = navLinks.querySelector('a[href="portal.html"]');
+                    const dashboardLink = navLinks.querySelector('a[href="dashboard.html"]');
+                    if (portalLink) portalLink.style.display = 'none';
+                    if (dashboardLink) dashboardLink.style.display = 'none';
+                    if (mobilePortalLink) mobilePortalLink.style.display = 'none';
+                    if (mobileDashboardLink) mobileDashboardLink.style.display = 'none';
+                }
+            }
+
+            renderNav();
         });
     </script>
 </body>
